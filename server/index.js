@@ -1,20 +1,25 @@
-const express =  require("express");
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 
 const authRouter = require("./routes/auth");
 
-const PORT =3000;
+const PORT = 3000;
 const app = express();
+const DB = "mongodb+srv://reham:reham123456789@cluster0.axjdoof.mongodb.net/?retryWrites=true&w=majority"
 
 //middleware
+app.use(express.json());
 app.use(authRouter);
 
-mongoose.connect().then(() => {
+mongoose
+  .connect(DB)
+  .then(() => {
     console.log("Connection Successful");
-}).catch((e) => {
+  })
+  .catch((e) => {
     console.log(e);
-});
+  });
 
-app.listen(PORT , () => {
-    console.log(`connected at port ${PORT} `);
+app.listen(PORT,"0.0.0.0", () => {
+  console.log(`connected at port ${PORT} `);
 });

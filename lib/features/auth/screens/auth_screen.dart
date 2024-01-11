@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/common/widgets/custom_button.dart';
 import 'package:ecommerce_app/common/widgets/custom_textfield.dart';
 import 'package:ecommerce_app/constants/global_variables.dart';
+import 'package:ecommerce_app/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 enum Auth {
@@ -20,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signup;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
-
+  final AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -31,6 +32,23 @@ class _AuthScreenState extends State<AuthScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
+  }
+
+  void signUpUser() {
+    authService.signUpUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+    );
+  }
+
+  void signInUser() {
+    authService.signInUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
   }
 
   @override
@@ -102,14 +120,19 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       CustomButton(
                         text: 'Sign Up',
-                        onTap: () {},
+                        onTap: () {
+                          if (_signUpFormKey.currentState!.validate()) {
+                            signUpUser();
+                          }
+                        },
                       )
                     ],
                   ),
                 ),
               ),
+
             ListTile(
-              tileColor: _auth == Auth.signin 
+              tileColor: _auth == Auth.signin
                   ? GlobalVariables.backgroundColor
                   : GlobalVariables.greyBackgroundCOlor,
               title: const Text(
@@ -134,7 +157,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 color: GlobalVariables.backgroundColor,
                 padding: const EdgeInsets.all(8),
                 child: Form(
-                  key: _signUpFormKey,
+                  key: _signInFormKey,
                   child: Column(
                     children: [
                       CustomTextField(
@@ -153,7 +176,11 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       CustomButton(
                         text: 'Sign In',
-                        onTap: () {},
+                        onTap: () {
+                          if (_signInFormKey.currentState!.validate()) {
+                            signInUser();
+                          }
+                        },
                       )
                     ],
                   ),
