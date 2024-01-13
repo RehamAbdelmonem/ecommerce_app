@@ -46,7 +46,7 @@ class _EcommerceAppState extends State<EcommerceApp> {
         appBarTheme: const AppBarTheme(
           elevation: 0,
           iconTheme: IconThemeData(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),

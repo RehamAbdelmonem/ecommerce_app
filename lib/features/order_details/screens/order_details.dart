@@ -105,7 +105,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search Amazon.in',
+                        hintText: 'Search ',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
@@ -227,6 +227,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   controlsBuilder: (context, details) {
                     if (user.type == 'admin') {
                       return CustomButton(
+                        color: const Color(0xff395886),
                         text: 'Done',
                         onTap: () => changeOrderStatus(details.currentStep),
                       );
